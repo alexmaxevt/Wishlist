@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EnterPinActivity">
+
+    <TextView
+        android:id="@+id/txtEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_EnterPinTextViewMarginStart"
+        android:layout_marginTop="@dimen/size_EnterPinTextViewMarginTop"
+        android:text="@string/app_enterPinTextView"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearVerification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearVerification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_EnterPinLinerLayoutMarginStart"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/contstraintVerification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEnter"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginTop="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_marginEnd="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginBottom="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_enterPinCircleDescription"
+            android:src="@drawable/shape" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginTop="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_marginEnd="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginBottom="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_enterPinCircleDescription"
+            android:src="@drawable/shape" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginTop="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_marginEnd="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginBottom="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_enterPinCircleDescription"
+            android:src="@drawable/shape" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginTop="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_marginEnd="@dimen/size_EnterPinImageViewarginStartAndEnd"
+            android:layout_marginBottom="@dimen/size_EnterPinImageViewarginTopAndBottom"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_enterPinCircleDescription"
+            android:src="@drawable/shape" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contstraintVerification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_EnterPinConstrainMArginStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearVerification"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_enterPinNum1"
+            app:layout_constraintEnd_toStartOf="@+id/number2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/number2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum2"
+            app:layout_constraintEnd_toStartOf="@+id/number3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/number1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/number3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/number2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/number4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number1" />
+
+        <Button
+            android:id="@+id/number5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum5"
+            app:layout_constraintStart_toEndOf="@id/number4"
+            app:layout_constraintTop_toBottomOf="@+id/number2" />
+
+        <Button
+            android:id="@+id/number6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum6"
+            app:layout_constraintStart_toEndOf="@id/number5"
+            app:layout_constraintTop_toBottomOf="@+id/number3" />
+
+        <Button
+            android:id="@+id/number7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number4" />
+
+        <Button
+            android:id="@+id/number8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum8"
+            app:layout_constraintStart_toEndOf="@id/number7"
+            app:layout_constraintTop_toBottomOf="@+id/number5" />
+
+        <Button
+            android:id="@+id/number9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum9"
+            app:layout_constraintStart_toEndOf="@id/number8"
+            app:layout_constraintTop_toBottomOf="@+id/number6" />
+
+        <Button
+            android:id="@+id/number0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:layout_marginEnd="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:text="@string/app_enterPinNum0"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+            app:layout_constraintTop_toBottomOf="@+id/number8" />
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="@dimen/size_EnterPinConstrainImageButtonWidth"
+            android:layout_height="@dimen/material_emphasis_medium"
+            android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
+            android:contentDescription="@string/app_enterPinNumBackspaceDescription"
+            android:src="@drawable/ic_keyboard_backspace_24px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

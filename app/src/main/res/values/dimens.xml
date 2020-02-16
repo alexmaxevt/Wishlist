@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_shape">50dp</dimen>
+    <dimen name="size_createNoteMarginLayout">30dp</dimen>
+    <dimen name="size_createNoteEditTextMarginEnd">50dp</dimen>
+    <dimen name="size_createNoteImageButtonWeight">67dp</dimen>
+    <dimen name="size_createNoteImageButtonHeight">60dp</dimen>
+    <dimen name="size_listListViewMarginStart">10dp</dimen>
+    <dimen name="size_listListViewMarginEnd">10dp</dimen>
+    <dimen name="size_listListViewDividerHeight">20dp</dimen>
+    <dimen name="size_EnterPinTextViewMarginStart">88dp</dimen>
+    <dimen name="size_EnterPinTextViewMarginTop">188dp</dimen>
+    <dimen name="size_EnterPinLinerLayoutMarginStart">64dp</dimen>
+    <dimen name="size_EnterPinImageViewarginStartAndEnd">10dp</dimen>
+    <dimen name="size_EnterPinImageViewarginTopAndBottom">5dp</dimen>
+    <dimen name="size_EnterPinConstrainMArginStart">68dp</dimen>
+    <dimen name="size_EnterPinConstrainButtonsMargin">5dp</dimen>
+    <dimen name="size_EnterPinConstrainImageButtonWidth">87dp</dimen>
+    <dimen name="size_EnterPinConstrainImageButtonHeight">48dp</dimen>
+    <dimen name="size_FloatButtonMargin">20dp</dimen>
+    <dimen name="size_settingMargins">20dp</dimen>
+    <dimen name="size_settingTextView">24sp</dimen>
+    <dimen name="size_itemPadding">10dp</dimen>
+    <dimen name="size_itemMargin">2dp</dimen>
+</resources>
