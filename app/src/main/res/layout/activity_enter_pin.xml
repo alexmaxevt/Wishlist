@@ -199,7 +199,7 @@
         <ImageButton
             android:id="@+id/btnDelete"
             android:layout_width="@dimen/size_EnterPinConstrainImageButtonWidth"
-            android:layout_height="@dimen/material_emphasis_medium"
+            android:layout_height="@dimen/size_EnterPinConstrainImageButtonHeight"
             android:layout_marginTop="@dimen/size_EnterPinConstrainButtonsMargin"
             android:contentDescription="@string/app_enterPinNumBackspaceDescription"
             android:src="@drawable/ic_keyboard_backspace_24px"
