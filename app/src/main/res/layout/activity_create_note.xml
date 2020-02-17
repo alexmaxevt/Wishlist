@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,24 +39,37 @@
         app:layout_constraintStart_toStartOf="@+id/editTextBody"
         app:layout_constraintTop_toBottomOf="@+id/editTextBody" />
 
-    <EditText
+    <TextView
+        android:id="@+id/textViewDeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_noteDeadline"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDeadLine"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxHasDeadLine"
+        tools:ignore="MissingConstraints" />
+
+    <br.com.sapereaude.maskedEditText.MaskedEditText
         android:id="@+id/editTextDeadLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/size_createNoteEditTextMarginEnd"
-        android:hint="@string/app_noteDeadline"
+        android:hint="@string/app_noteDeadlineExample"
+        android:inputType="date"
+        app:keep_hint="true"
         app:layout_constraintBottom_toBottomOf="@id/btnSelectDeadLine"
         app:layout_constraintEnd_toStartOf="@id/btnSelectDeadLine"
-        app:layout_constraintStart_toStartOf="@+id/checkBoxHasDeadLine" />
+        app:layout_constraintStart_toStartOf="@+id/textViewDeadline"
+        mask:allowed_chars="1234567890"
+        mask:mask="##.##.####" />
 
     <ImageButton
         android:id="@+id/btnSelectDeadLine"
         android:layout_width="@dimen/size_createNoteImageButtonWeight"
         android:layout_height="@dimen/size_createNoteImageButtonHeight"
+        android:background="@color/colorMyBackground"
         android:contentDescription="@string/app_calendarButtonDescription"
         android:src="@drawable/ic_calendar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxHasDeadLine"
-        android:background="@color/colorMyBackground"/>
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxHasDeadLine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

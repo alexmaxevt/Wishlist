@@ -37,4 +37,5 @@
     <string name="app_notesTitle">Список заметок</string>
     <string name="app_notesAddData">Данные добавлены</string>
     <string name="app_notesAddDataDonOpen">Не удалось открыть данные</string>
+    <string name="app_noteDeadlineExample">01011970</string>
 </resources>
