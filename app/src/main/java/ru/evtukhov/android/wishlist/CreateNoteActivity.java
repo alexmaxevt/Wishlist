@@ -139,6 +139,8 @@ public class CreateNoteActivity extends AppCompatActivity {
         try {
             FileNote.exportToJSON(this, noteNewInfo);
             Toast.makeText(this, R.string.app_createNoteSuccess, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CreateNoteActivity.this, NoteListActivity.class);
+            startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, R.string.app_createNoteDontSuccess, Toast.LENGTH_SHORT).show();
