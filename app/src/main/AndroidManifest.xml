@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_note_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".CreateNoteActivity"></activity>
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".CreateNoteActivity" />
         <activity android:name=".NoteListActivity" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".NewPinActivity" />
         <activity android:name=".EnterPinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -129,7 +129,7 @@ public class EnterPinActivity extends AppCompatActivity {
 
     private void verifyFile() {
         if (!keystore.isPinCodeSet()) {
-            Intent intent = new Intent(EnterPinActivity.this, SettingActivity.class);
+            Intent intent = new Intent(EnterPinActivity.this, NewPinActivity.class);
             startActivity(intent);
         }
     }

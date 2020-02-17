@@ -70,7 +70,7 @@ public class NoteListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(NoteListActivity.this, SettingActivity.class);
+            Intent intent = new Intent(NoteListActivity.this, NewPinActivity.class);
             startActivity(intent);
             return false;
         }
