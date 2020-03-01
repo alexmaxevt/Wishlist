@@ -111,17 +111,13 @@ public class CreateNoteActivity extends AppCompatActivity {
         if (id == R.id.action_note) {
             if ("".equals(txtTitle) && "".equals(txtBody) && !"".equals(txtDate) && !isCheck) {
                 emptyFields();
-            }
-            else if ("".equals(txtTitle) && "".equals(txtBody) && "".equals(txtDate) && !isCheck) {
+            } else if ("".equals(txtTitle) && "".equals(txtBody) && "".equals(txtDate) && !isCheck) {
                 emptyFields();
-            }
-            else if ("".equals(txtTitle) && "".equals(txtBody) && !"".equals(txtDate) && isCheck) {
+            } else if ("".equals(txtTitle) && "".equals(txtBody) && !"".equals(txtDate) && isCheck) {
                 emptyFields();
-            }
-            else if ("".equals(txtTitle) && "".equals(txtBody) && "".equals(txtDate) && isCheck) {
+            } else if ("".equals(txtTitle) && "".equals(txtBody) && "".equals(txtDate) && isCheck) {
                 emptyFields();
-            }
-            else {
+            } else {
                 prepareInfoForSaving();
             }
             return false;
@@ -196,7 +192,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         checkBoxSelect.setChecked(true);
     }
 
-    private void emptyFields () {
+    private void emptyFields() {
         Toast.makeText(this, R.string.app_noteEmpty, Toast.LENGTH_SHORT).show();
         setListActivity();
     }
