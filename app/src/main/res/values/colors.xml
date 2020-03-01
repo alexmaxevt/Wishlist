@@ -8,7 +8,7 @@
     <color name="colorBackgroundYellow">#7EFFEB3B</color> 7EFFEB3B
     <color name="colorMyPrimary">#DCEDC8</color>
     <color name="colorMyPrimaryDark">#33691E</color>
-    <color name="colorMyAccent">#E0F7FA</color>
+    <color name="colorMyAccent">#00BCD4</color>
     <color name="colorMyBackground">#DCEDC8</color>
     <color name="colorMyButtonColor">#81C784</color>
 </resources>

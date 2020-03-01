@@ -5,10 +5,11 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class HashedKeystore implements Keystore {
     private final Context context;
@@ -20,16 +21,11 @@ public class HashedKeystore implements Keystore {
 
     @Override
     public void setPin(@NonNull final String pin) {
-        final File file = new File(context.getFilesDir(), FILE_NAME);
-        if (!file.exists()) {
-            try {
-                final FileOutputStream outputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-                final String hashPin = Hash.md5Custom(pin);
-                outputStream.write(hashPin.getBytes());
-                outputStream.close();
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE)))) {
+            final String hashPin = Hash.md5Custom(pin);
+            bufferedWriter.write(hashPin);
+        } catch (final IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -7,31 +7,25 @@ import java.util.Objects;
 public class Note implements Serializable {
     private String textNameNote;
     private String textBodyNote;
-    private String textDateNote;
     private boolean checkIsChecked;
-    private Long date;
+    private String id;
+    private Date deadlineDate;
+    private Date lastModifiedDate;
 
-    public Note(String textNameNote, String textBodyNote, String textDateNote, boolean checkIsChecked) {
+    Note(String id, String textNameNote, String textBodyNote, boolean checkIsChecked, Date lastModifiedDate, Date deadlineDate) {
+        this.id = id;
         this.textNameNote = textNameNote;
         this.textBodyNote = textBodyNote;
-        this.textDateNote = textDateNote;
         this.checkIsChecked = checkIsChecked;
-        date = new Date().getTime();
+        this.lastModifiedDate = lastModifiedDate;
+        this.deadlineDate = deadlineDate;
     }
 
-    public Note(String textNameNote, String textBodyNote, String textDateNote, boolean checkIsChecked, Long date) {
-        this.textNameNote = textNameNote;
-        this.textBodyNote = textBodyNote;
-        this.textDateNote = textDateNote;
-        this.checkIsChecked = checkIsChecked;
-        this.date = date;
-    }
-
-    public String getTextNameNote() {
+    String getTextNameNote() {
         return textNameNote;
     }
 
-    public boolean isCheckIsChecked() {
+    boolean isCheckIsChecked() {
         return checkIsChecked;
     }
 
@@ -43,7 +37,7 @@ public class Note implements Serializable {
         this.textNameNote = textNameNote;
     }
 
-    public String getTextBodyNote() {
+    String getTextBodyNote() {
         return textBodyNote;
     }
 
@@ -51,20 +45,28 @@ public class Note implements Serializable {
         this.textBodyNote = textBodyNote;
     }
 
-    public String getTextDateNote() {
-        return textDateNote;
+    public String getId() {
+        return id;
     }
 
-    public void setTextDateNote(String textDateNote) {
-        this.textDateNote = textDateNote;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Long getDate() {
-        return date;
+    Date getDeadlineDate() {
+        return deadlineDate;
     }
 
-    public void setDate(Long date) {
-        this.date = date;
+    public void setDeadlineDate(Date deadlineDate) {
+        this.deadlineDate = deadlineDate;
+    }
+
+    Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     @Override
@@ -74,23 +76,13 @@ public class Note implements Serializable {
         Note note = (Note) o;
         return Objects.equals(textNameNote, note.textNameNote) &&
                 Objects.equals(textBodyNote, note.textBodyNote) &&
-                Objects.equals(textDateNote, note.textDateNote) &&
+                Objects.equals(deadlineDate, note.deadlineDate) &&
                 Objects.equals(checkIsChecked, note.checkIsChecked) &&
-                Objects.equals(date, note.date);
+                Objects.equals(lastModifiedDate, note.lastModifiedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(textNameNote, textBodyNote, textDateNote, date);
-    }
-
-    @Override
-    public String toString() {
-        return "Note{" +
-                "textNameNote='" + textNameNote + '\'' +
-                ", textBodyNote='" + textBodyNote + '\'' +
-                ", textDateNote='" + textDateNote + '\'' +
-                ", date=" + date +
-                '}';
+        return Objects.hash(id, textNameNote, textBodyNote, checkIsChecked, lastModifiedDate, deadlineDate);
     }
 }

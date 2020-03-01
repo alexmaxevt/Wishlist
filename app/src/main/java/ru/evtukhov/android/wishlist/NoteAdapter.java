@@ -11,36 +11,33 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class NoteAdapter extends BaseAdapter {
     private List<Note> notesList;
     private LayoutInflater layoutInFlater;
-    Context myContext;
-    private String textName;
-    private String textBody;
-    private String textDate;
-    private boolean checkIsChecked;
+    private Context myContext;
+    private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private NoteRepository noteRepository = App.getNoteRepository();
 
     NoteAdapter(Context context, List<Note> notesList) {
         myContext = context;
         this.notesList = notesList;
-        layoutInFlater = layoutInFlater.from(context);
+        layoutInFlater = LayoutInflater.from(context);
 
     }
 
     void addItem(Note item) {
-        this.notesList.add(item);
+        this.noteRepository.saveNote(item);
         notifyDataSetChanged();
     }
 
-    void removeItem(int position) {
+    private void removeItem(int position) {
         Note note = notesList.get(position);
         notesList.remove(position);
         try {
-            FileNote.remove(myContext, note);
+            noteRepository.deleteById(note);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,6 +46,7 @@ public class NoteAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (notesList == null) return 0;
         return notesList.size();
     }
 
@@ -57,7 +55,7 @@ public class NoteAdapter extends BaseAdapter {
         return notesList.get(position);
     }
 
-    public Note getNote(int position) {
+    private Note getNote(int position) {
         return notesList.get(position);
     }
 
@@ -76,35 +74,38 @@ public class NoteAdapter extends BaseAdapter {
         TextView textViewName = view.findViewById(R.id.textViewHead);
         TextView textViewBody = view.findViewById(R.id.textViewBody);
         TextView textViewDate = view.findViewById(R.id.textViewDeadLineDay);
-        textName = notePosition.getTextNameNote();
-        textBody = notePosition.getTextBodyNote();
-        textDate = notePosition.getTextDateNote();
-        checkIsChecked = notePosition.isCheckIsChecked();
+        String textName = notePosition.getTextNameNote();
+        String textBody = notePosition.getTextBodyNote();
         if ("".equals(textName)) {
             textViewName.setVisibility(View.GONE);
         } else {
+            textViewName.setVisibility(View.VISIBLE);
             textViewName.setText(textName);
         }
-        textViewBody.setText(textBody);
-        if ("".equals(textDate)) {
-            textViewDate.setVisibility(View.GONE);
-        } else {
-            SimpleDateFormat dateNow = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-            String dateNowString = dateNow.format(new Date());
-            int dateNowInt = Integer.parseInt(dateNowString.replace(".", ""));
-            int dateInt = Integer.parseInt(textDate.replace(".", ""));
-            if (dateNowInt >= dateInt) {
-                textViewDate.setBackgroundResource(R.color.colorBackgroundRed);
-            } else if (dateInt <= dateNowInt + 2000000) {
-                textViewDate.setBackgroundResource(R.color.colorBackgroundYellow);
+        if ("".equals(textBody)) {
+            if ("".equals(textName) && notePosition.getDeadlineDate() == null) {
+                textViewBody.setVisibility(View.VISIBLE);
+            } else {
+                textViewBody.setVisibility(View.GONE);
             }
-            textViewDate.setText(textDate);
+        } else {
+            textViewBody.setVisibility(View.VISIBLE);
+            textViewBody.setText(textBody);
+        }
+        textViewBody.setText(textBody);
+        if (notePosition.getDeadlineDate() == null) {
+            textViewDate.setVisibility(View.GONE);
+        }
+        else {
+            textViewDate.setVisibility(View.VISIBLE);
+            textViewDate.setText(format.format(notePosition.getDeadlineDate()));
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Note editNote = new Note(notePosition.getTextNameNote(), notePosition.getTextBodyNote(),
-                        notePosition.getTextDateNote(), notePosition.isCheckIsChecked(), notePosition.getDate());
+                Note editNote = new Note(notePosition.getId(), notePosition.getTextNameNote(),
+                        notePosition.getTextBodyNote(), notePosition.isCheckIsChecked(),
+                        notePosition.getDeadlineDate(), notePosition.getLastModifiedDate());
                 Intent intent = new Intent(myContext, CreateNoteActivity.class);
                 intent.putExtra(Note.class.getSimpleName(), editNote);
                 myContext.startActivity(intent);

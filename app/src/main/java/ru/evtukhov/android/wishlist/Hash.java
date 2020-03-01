@@ -17,11 +17,11 @@ class Hash {
             e.printStackTrace();
         }
         BigInteger bigInt = new BigInteger(1, digest);
-        String md5Hex = bigInt.toString(16);
+        StringBuilder md5Hex = new StringBuilder(bigInt.toString(16));
 
         while (md5Hex.length() < 32) {
-            md5Hex = "0" + md5Hex;
+            md5Hex.insert(0, "0");
         }
-        return md5Hex;
+        return md5Hex.toString();
     }
 }

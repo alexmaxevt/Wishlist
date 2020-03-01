@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewHead"
         style="@style/HeadLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Добавить новую текстовую заметку: заголовок, текстовое содержание, дедлайн" />
+        android:text="" />
 
     <TextView
         android:id="@+id/textViewBody"
@@ -19,7 +20,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="@dimen/size_itemPadding"
-        android:text="Добавить новую текстовую заметку: заголовок, текстовое содержание, дедлайн. Добавить новую текстовую заметку: заголовок, текстовое содержание, дедлайн;" />
+        android:text="" />
 
     <TextView
         android:id="@+id/textViewDeadLineDay"
@@ -29,9 +30,7 @@
         android:layout_gravity="end"
         android:layout_margin="@dimen/size_itemMargin"
         android:padding="@dimen/size_itemPadding"
-        android:text="01.01.1970 00:00:00" />
-
-
+        android:text="" />
 
 
 </LinearLayout>

@@ -18,6 +18,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         keystore = new HashedKeystore(this);
-        FileNote fileNoteRepository = new FileNote();
+        noteRepository = new FileNote(this);
     }
 }

@@ -1,9 +1,9 @@
 package ru.evtukhov.android.wishlist;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +16,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
@@ -27,49 +32,61 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private String textName;
     private String textBody;
-    private String textDate;
-    private String textDateOfCreate;
-    private boolean checkIsChecked;
+    private Date deadLineDateParse;
 
     private Note getNote;
-    private Bundle bundle;
 
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     final Calendar dateDeadLine = Calendar.getInstance();
+    private NoteRepository noteRepository = App.getNoteRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
         this.setTitle(R.string.app_newNotesTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
-        bundle = getIntent().getExtras();
+        initBundle();
+    }
+
+    private void setListActivity() {
+        Intent intent = new Intent(CreateNoteActivity.this, NoteListActivity.class);
+        startActivity(intent);
+    }
+
+    private void initBundle() {
+        Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            this.setTitle(R.string.app_noteEdit);
             getNote = (Note) bundle.getSerializable(Note.class.getSimpleName());
-            textDateOfCreate = getNote.getDate().toString();
+            if (getNote == null) {
+                return;
+            }
             editTextName.setText(getNote.getTextNameNote());
             editTextBody.setText(getNote.getTextBodyNote());
-            editTextDate.setText(getNote.getTextDateNote());
+            if (getNote.getDeadlineDate() != null) {
+                String deadLineDate = format.format(getNote.getDeadlineDate());
+                editTextDate.setText(deadLineDate);
+            } else {
+                editTextDate.setText("");
+            }
             checkBoxSelect.setChecked(getNote.isCheckIsChecked());
         }
     }
 
     private void initView() {
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         editTextName = findViewById(R.id.editTextHead);
         editTextBody = findViewById(R.id.editTextBody);
         editTextDate = findViewById(R.id.editTextDeadLine);
         checkBoxSelect = findViewById(R.id.checkBoxHasDeadLine);
         checkBoxSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if ("".equals(editTextDate.getText().toString())) {
-                        setDate();
-                    }
-                } else {
+                if (!isChecked) {
                     Toast.makeText(getApplicationContext(), R.string.app_noteDontDeadline, Toast.LENGTH_SHORT).show();
-                    String convertText = editTextDate.getText().toString();
-                    editTextDate.setHint(convertText);
                     editTextDate.getText().clear();
+                    checkBoxSelect.setChecked(false);
                 }
             }
         });
@@ -82,30 +99,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         });
     }
 
-    public void setDate() {
-        new DatePickerDialog(CreateNoteActivity.this, date,
-                dateDeadLine.get(Calendar.YEAR),
-                dateDeadLine.get(Calendar.MONTH),
-                dateDeadLine.get(Calendar.DAY_OF_MONTH))
-                .show();
-    }
-
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dateDeadLine.set(Calendar.YEAR, year);
-            dateDeadLine.set(Calendar.MONTH, monthOfYear);
-            dateDeadLine.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            setInitialDate();
-        }
-    };
-
-    private void setInitialDate() {
-        editTextDate.setText(DateUtils.formatDateTime(this,
-                dateDeadLine.getTimeInMillis(),
-                DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR));
-        checkBoxSelect.setChecked(true);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_note, menu);
@@ -116,34 +109,71 @@ public class CreateNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_note) {
-            Toast.makeText(CreateNoteActivity.this, R.string.app_pinButton, Toast.LENGTH_LONG).show();
-            saveInfoNote();
-            return false;
-        } else if (id == android.R.id.home) {
-            Intent intent = new Intent(CreateNoteActivity.this, NoteListActivity.class);
-            startActivity(intent);
+            prepareInfoForSaving();
             return false;
         }
         return true;
     }
 
     private void saveInfoNote() {
-        if (bundle != null) {
-            FileNote.remove(this, getNote);
+        boolean checkIsChecked = checkBoxSelect.isChecked();
+        Note noteNewInfo;
+        if (getNote != null) {
+            noteRepository.deleteById(getNote);
+            noteNewInfo = new Note(getNote.getId(), textName, textBody, checkIsChecked, new Date(), deadLineDateParse);
+        } else {
+            noteNewInfo = NoteProd.createNote(textName, textBody, checkIsChecked, deadLineDateParse);
         }
-        textName = editTextName.getText().toString();
-        textBody = editTextBody.getText().toString();
-        textDate = editTextDate.getText().toString();
-        checkIsChecked = checkBoxSelect.isChecked();
-        Note noteNewInfo = new Note(textName, textBody, textDate, checkIsChecked);
         try {
-            FileNote.exportToJSON(this, noteNewInfo);
+            noteRepository.saveNote(noteNewInfo);
             Toast.makeText(this, R.string.app_createNoteSuccess, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(CreateNoteActivity.this, NoteListActivity.class);
-            startActivity(intent);
+            setListActivity();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, R.string.app_createNoteDontSuccess, Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void prepareInfoForSaving() {
+        textName = editTextName.getText().toString();
+        textBody = editTextBody.getText().toString();
+        String textDate = editTextDate.getText().toString();
+        if ("".equals(textDate)) {
+            checkBoxSelect.setChecked(false);
+            deadLineDateParse = null;
+            saveInfoNote();
+        } else {
+            try {
+                deadLineDateParse = format.parse(textDate);
+            } catch (ParseException e) {
+                deadLineDateParse = null;
+            }
+            checkBoxSelect.setChecked(true);
+            saveInfoNote();
+        }
+    }
+
+    public void setDate() {
+        datePickerDialog = new DatePickerDialog(CreateNoteActivity.this, date,
+                dateDeadLine.get(Calendar.YEAR),
+                dateDeadLine.get(Calendar.MONTH),
+                dateDeadLine.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.setCancelable(false);
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.app_noteCancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        datePickerDialog.dismiss();
+                    }
+                });
+        datePickerDialog.show();
+    }
+
+    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateDeadLine.set(Calendar.YEAR, year);
+            dateDeadLine.set(Calendar.MONTH, monthOfYear);
+            dateDeadLine.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        }
+    };
 }

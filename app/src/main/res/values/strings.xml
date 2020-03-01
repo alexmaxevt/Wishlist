@@ -39,4 +39,11 @@
     <string name="app_notesAddDataDonOpen">Не удалось открыть данные</string>
     <string name="app_noteDeadlineExample">01011970</string>
     <string name="app_addPinTitle">Создание pin кода</string>
+    <string name="app_pinOldTextView">Введите текущий пароль:</string>
+    <string name="app_pinEquals">Текущий и новый pin не должны совпадать</string>
+    <string name="app_noteEdit">Редактирование заметки</string>
+    <string name="app_noteCancel">Отмена</string>
+    <string name="app_pinLenError">Длина текущего и нового пароля должна равняться 4 символам</string>
+    <string name="app_pinOldEqualsError">Текущий пароль не совпадает</string>
+    <string name="app_pinEditTitle">Редактирование pin-кода</string>
 </resources>

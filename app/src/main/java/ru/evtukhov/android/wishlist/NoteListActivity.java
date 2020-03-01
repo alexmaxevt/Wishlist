@@ -20,33 +20,31 @@ import java.util.List;
 public class NoteListActivity extends AppCompatActivity {
 
     private List<Note> notes = new ArrayList<>();
-    BaseAdapter adapter;
+    private NoteRepository noteRepository = App.getNoteRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
         this.setTitle(R.string.app_newNotesTitle);
-        initView();
         getNotes();
+        initView();
     }
 
-    private List<Note> getNotes() {
+    private void getNotes() {
         try {
-            notes = FileNote.importFromJSON(this);
+            notes = noteRepository.getNotes();
         } catch (EmptyStackException e) {
             e.getMessage();
         }
         if (notes != null) {
-            adapter = new NoteAdapter(this, notes);
+            BaseAdapter adapter = new NoteAdapter(this, notes);
             ListView listView = findViewById(R.id.listViewNotes);
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            Toast.makeText(this, R.string.app_notesAddData, Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, R.string.app_notesAddDataDonOpen, Toast.LENGTH_LONG).show();
         }
-        return null;
     }
 
     private void initView() {
@@ -70,7 +68,7 @@ public class NoteListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(NoteListActivity.this, NewPinActivity.class);
+            Intent intent = new Intent(NoteListActivity.this, SettingActivity.class);
             startActivity(intent);
             return false;
         }

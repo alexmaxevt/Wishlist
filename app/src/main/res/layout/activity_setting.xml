@@ -4,6 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingActivity">
+    tools:context=".NewPinActivity">
 
+    <TextView
+        android:id="@+id/txtPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_settingMargins"
+        android:layout_marginTop="@dimen/size_settingMargins"
+        android:text="@string/app_pinTextView"
+        android:textSize="@dimen/size_settingTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextNewPasswordContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_settingMargins"
+        android:layout_marginEnd="@dimen/size_settingMargins"
+        app:layout_constraintTop_toBottomOf="@id/txtPin"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newPinCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberPassword"
+            android:maxLength="4">
+
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/oldPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_settingMargins"
+        android:layout_marginTop="@dimen/size_settingMargins"
+        android:text="@string/app_pinOldTextView"
+        android:textSize="@dimen/size_settingTextView"
+        app:layout_constraintTop_toBottomOf="@id/editTextNewPasswordContainer" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextPasswordContainerOld"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_settingMargins"
+        android:layout_marginEnd="@dimen/size_settingMargins"
+        app:layout_constraintTop_toBottomOf="@id/oldPin"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/oldCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberPassword"
+            android:maxLength="4">
+
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSaveNewPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_settingMargins"
+        android:text="@string/app_pinButton"
+        app:layout_constraintTop_toBottomOf="@id/editTextPasswordContainerOld" />
 </androidx.constraintlayout.widget.ConstraintLayout>

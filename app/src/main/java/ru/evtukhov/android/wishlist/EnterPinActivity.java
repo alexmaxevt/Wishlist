@@ -40,7 +40,6 @@ public class EnterPinActivity extends AppCompatActivity {
         verifyFile();
         initViews();
         enterPinCode();
-
     }
 
     private void initViews() {
@@ -124,7 +123,6 @@ public class EnterPinActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void verifyFile() {

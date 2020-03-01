@@ -17,62 +17,68 @@ public class FileNote implements NoteRepository {
 
     private static final String FILE_NAME_NOTES = "notes";
     private static Gson gson = new Gson();
+    private SharedPreferences preferences;
 
-    static void exportToJSON(Context context, Note note) {
-        SharedPreferences preferences = getPreferences(context);
+    FileNote(Context context) {
+        preferences = context.getSharedPreferences(FILE_NAME_NOTES, MODE_PRIVATE);
+    }
+
+    @Override
+    public void saveNote(Note note) {
         preferences.edit()
-                .putString(note.getDate().toString(), gson.toJson(note))
+                .putString(note.getId(), gson.toJson(note))
                 .apply();
     }
 
-    static void remove(Context context, Note note) {
-        SharedPreferences preferences = getPreferences(context);
+    @Override
+    public void deleteById(Note note) {
         preferences.edit()
-                .remove(note.getDate().toString())
+                .remove(note.getId())
                 .apply();
     }
 
-    static List<Note> importFromJSON(Context context) {
-        SharedPreferences preferences = getPreferences(context);
+    @Override
+    public List<Note> getNotes() {
         Map<String, ?> all = preferences.getAll();
         List<Note> result = new ArrayList<>(all.size());
         for (Map.Entry<String, ?> entry : all.entrySet()) {
             String noteSerialized = (String) entry.getValue();
             result.add(gson.fromJson(noteSerialized, Note.class));
         }
-        Collections.sort(result, new Comparator<Note>() {
-            @Override
-            public int compare(Note thisNote, Note anotherNote) {
-                if (anotherNote.getTextDateNote() != null) {
-                    return anotherNote.getTextDateNote().compareTo(thisNote.getTextDateNote()) + anotherNote.getDate().compareTo(thisNote.getDate());
-                }
-                return anotherNote.getDate().compareTo(thisNote.getDate());
-            }
-        });
+        Collections.sort(result, deadLineComparator);
+        Collections.sort(result, lastModifiedDateComparator);
         return result;
     }
 
-    private static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences(FILE_NAME_NOTES, MODE_PRIVATE);
-    }
+    private Comparator<Note> deadLineComparator = new Comparator<Note>() {
+        @Override
+        public int compare(Note thisNote, Note anotherNote) {
+            if (thisNote.getDeadlineDate() != null) {
+                if (anotherNote.getDeadlineDate() == null) {
+                    return -1;
+                }
+                int comparedByDeadLine = thisNote.getDeadlineDate().compareTo(anotherNote.getDeadlineDate());
+                if (comparedByDeadLine != 0) {
+                    return comparedByDeadLine;
+                } else {
+                    return -thisNote.getLastModifiedDate().compareTo(anotherNote.getLastModifiedDate());
+                }
+            }
+            return 1;
+        }
+    };
+    private Comparator<Note> lastModifiedDateComparator = new Comparator<Note>() {
+        @Override
+        public int compare(Note thisNote, Note anotherNote) {
+            if (thisNote.getDeadlineDate() == null && anotherNote.getDeadlineDate() == null) {
+                return -thisNote.getLastModifiedDate().compareTo(anotherNote.getLastModifiedDate());
+            }
+            return 0;
+        }
+    };
 
     @Override
     public Note getNoteById(String id) {
-        return null;
-    }
-
-    @Override
-    public List<Note> getNotes() {
-        return null;
-    }
-
-    @Override
-    public void saveNote(Note note) {
-
-    }
-
-    @Override
-    public void deleteById(String id) {
-
+        return gson.fromJson(preferences.getString(String.valueOf(id), ""), Note.class);
     }
 }
