@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.ParseException;
@@ -42,6 +43,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         this.setTitle(R.string.app_newNotesTitle);
         initView();
         initBundle();
+        getHomeButton();
     }
 
     private void setListActivity() {
@@ -102,11 +104,33 @@ public class CreateNoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        String txtTitle = editTextName.getText().toString();
+        String txtBody = editTextBody.getText().toString();
+        String txtDate = editTextDate.getText().toString();
+        boolean isCheck = checkBoxSelect.isChecked();
         if (id == R.id.action_note) {
-            prepareInfoForSaving();
+            if ("".equals(txtTitle) && "".equals(txtBody) && !"".equals(txtDate) && !isCheck) {
+                emptyFields();
+            }
+            else if ("".equals(txtTitle) && "".equals(txtBody) && "".equals(txtDate) && !isCheck) {
+                emptyFields();
+            }
+            else if ("".equals(txtTitle) && "".equals(txtBody) && !"".equals(txtDate) && isCheck) {
+                emptyFields();
+            }
+            else if ("".equals(txtTitle) && "".equals(txtBody) && "".equals(txtDate) && isCheck) {
+                emptyFields();
+            }
+            else {
+                prepareInfoForSaving();
+            }
             return false;
         }
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveInfoNote() {
@@ -169,5 +193,17 @@ public class CreateNoteActivity extends AppCompatActivity {
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
         checkBoxSelect.setChecked(true);
+    }
+
+    private void emptyFields () {
+        Toast.makeText(this, R.string.app_noteEmpty, Toast.LENGTH_SHORT).show();
+        setListActivity();
+    }
+
+    private void getHomeButton() {
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

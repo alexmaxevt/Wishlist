@@ -46,4 +46,5 @@
     <string name="app_pinLenError">Длина текущего и нового пароля должна равняться 4 символам</string>
     <string name="app_pinOldEqualsError">Текущий пароль не совпадает</string>
     <string name="app_pinEditTitle">Редактирование pin-кода</string>
+    <string name="app_noteEmpty">Поля не заполнены, заметка не была сохранена</string>
 </resources>
