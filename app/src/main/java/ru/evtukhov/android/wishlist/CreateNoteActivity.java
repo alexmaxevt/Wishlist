@@ -130,6 +130,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             this.finish();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
