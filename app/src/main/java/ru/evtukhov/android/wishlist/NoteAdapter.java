@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class NoteAdapter extends BaseAdapter {
+
     private List<Note> notesList;
     private LayoutInflater layoutInFlater;
     private Context myContext;

@@ -24,7 +24,6 @@ public class NewPinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_pin);
         this.setTitle(R.string.app_settingTitle);
         initViews();
-
     }
 
     private void initViews() {

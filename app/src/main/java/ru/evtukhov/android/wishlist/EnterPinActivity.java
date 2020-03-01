@@ -32,7 +32,6 @@ public class EnterPinActivity extends AppCompatActivity {
     private ImageView imageView4;
     private Keystore keystore = App.getKeystore();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +130,6 @@ public class EnterPinActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 
     private void verifyPin() {
         final String pinStr = keystore.getPin();

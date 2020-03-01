@@ -1,7 +1,6 @@
 package ru.evtukhov.android.wishlist;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,16 +28,11 @@ public class CreateNoteActivity extends AppCompatActivity {
     private EditText editTextBody;
     private EditText editTextDate;
     private CheckBox checkBoxSelect;
-
     private String textName;
     private String textBody;
     private Date deadLineDateParse;
-
     private Note getNote;
-
-    private DatePickerDialog datePickerDialog;
     private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-    final Calendar dateDeadLine = Calendar.getInstance();
     private NoteRepository noteRepository = App.getNoteRepository();
 
     @Override
@@ -94,7 +88,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         buttonDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDate();
+                selectDate();
             }
         });
     }
@@ -153,27 +147,27 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
     }
 
-    public void setDate() {
-        datePickerDialog = new DatePickerDialog(CreateNoteActivity.this, date,
-                dateDeadLine.get(Calendar.YEAR),
-                dateDeadLine.get(Calendar.MONTH),
-                dateDeadLine.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.setCancelable(false);
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.app_noteCancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        datePickerDialog.dismiss();
-                    }
-                });
+    public void selectDate() {
+        final Calendar calendar = Calendar.getInstance();
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String formatDay = "" + dayOfMonth;
+                String formatMonth = "" + (month + 1);
+                if (dayOfMonth < 10) {
+                    formatDay = "0" + dayOfMonth;
+                }
+                if (month < 10) {
+                    formatMonth = "0" + (month + 1);
+                }
+                String formatDate = formatDay + "." + formatMonth + "." + year;
+                editTextDate.setText(formatDate);
+            }
+        }, mYear, mMonth, mDay);
         datePickerDialog.show();
+        checkBoxSelect.setChecked(true);
     }
-
-    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dateDeadLine.set(Calendar.YEAR, year);
-            dateDeadLine.set(Calendar.MONTH, monthOfYear);
-            dateDeadLine.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        }
-    };
 }

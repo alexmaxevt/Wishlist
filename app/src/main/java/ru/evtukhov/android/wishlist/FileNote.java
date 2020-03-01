@@ -67,6 +67,7 @@ public class FileNote implements NoteRepository {
             return 1;
         }
     };
+
     private Comparator<Note> lastModifiedDateComparator = new Comparator<Note>() {
         @Override
         public int compare(Note thisNote, Note anotherNote) {

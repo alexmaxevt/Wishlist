@@ -61,6 +61,7 @@ public class NoteListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_notes, menu);
+
         return true;
     }
 
@@ -72,6 +73,7 @@ public class NoteListActivity extends AppCompatActivity {
             startActivity(intent);
             return false;
         }
+
         return true;
     }
 }

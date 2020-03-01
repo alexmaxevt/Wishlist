@@ -22,6 +22,7 @@ class Hash {
         while (md5Hex.length() < 32) {
             md5Hex.insert(0, "0");
         }
+
         return md5Hex.toString();
     }
 }

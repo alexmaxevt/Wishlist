@@ -7,6 +7,7 @@ import java.util.UUID;
 
 class NoteProd {
     static Note createNote(@Nullable String textNameNote, @Nullable String textBodyNote, boolean checked, @Nullable Date deadLineDate) {
+
         return new Note(
                 UUID.randomUUID().toString(),
                 textNameNote,
